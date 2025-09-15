@@ -3,8 +3,11 @@ require("config.lazy")
 
 -- loading configs
 ---- load colorscheme
+local theme = require("config.theme")
+theme.load_theme()
 
 ----------- keymap to switch
+vim.keymap.set("n", "<leader>cs", theme.switch_theme, { desc = "Switch colorscheme" })
 
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
@@ -19,3 +22,4 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.expandtab = true
   end,
 })
+
