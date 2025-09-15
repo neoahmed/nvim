@@ -13,7 +13,7 @@ for _, mod in ipairs(enabled) do
     vim.notify("Failed to require plugins." .. mod .. ": " .. tostring(res), vim.log.levels.WARN)
   else
     -- if module returned a list of specs, append them
-    if type(res) == "table" then
+    if type(res) == "table" and res[1] then
       for _, spec in ipairs(res) do
         table.insert(M, spec)
       end
