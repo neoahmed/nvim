@@ -5,6 +5,17 @@ local M = {}
 -- Order matters sometimes (colorscheme first).
 local enabled = {
   -- "pluginfile"
+  "colorscheme",
+  "nvim-tree",
+  "gitsigns",
+  "nvim-web-devicons",
+  "which-key",
+  "autopairs",
+  "barbar",
+  "lualine",
+  "colorizer",
+  "render-markdown",
+
 }
 
 for _, mod in ipairs(enabled) do
