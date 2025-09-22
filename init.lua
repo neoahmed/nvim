@@ -23,4 +23,12 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+---- load colorscheme
+local theme = require("config.theme")
+theme.load_theme()
+
+----------- keymap to switch
+vim.keymap.set("n", "<leader>cs", theme.switch_theme, { desc = "Switch colorscheme" })
+
+
 
