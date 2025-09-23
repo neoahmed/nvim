@@ -16,6 +16,44 @@ local function safe_pcall(fn, ...)
   return nil
 end
 
+-- ensure truecolor
+vim.opt.termguicolors = true
+
+-- Redefine *TS groups after applying colorscheme
+local function set_ts_highlights()
+  pcall(function()
+    local hl = vim.api.nvim_set_hl
+    local links = {
+      TSKeyword     = { link = "Keyword" },
+      TSFunction    = { link = "Function" },
+      TSVariable    = { link = "Identifier" },
+      TSString      = { link = "String" },
+      TSComment     = { link = "Comment" },
+      TSNumber      = { link = "Number" },
+      TSConditional = { link = "Conditional" },
+      TSRepeat      = { link = "Repeat" },
+      TSOperator    = { link = "Operator" },
+      TSParameter   = { link = "Identifier" },
+      TSField       = { link = "Identifier" },
+      TSProperty    = { link = "Identifier" },
+      TSKeywordFunction = { link = "Function" },
+      TSConstructor = { link = "Special" },
+      TSNamespace   = { link = "Namespace" },
+    }
+
+    for group, opts in pairs(links) do
+      hl(0, group, opts)
+    end
+  end)
+end
+
+-- apply after any colorscheme change
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = set_ts_highlights,
+  desc = "Reapply TS highlights after colorscheme change",
+})
+
 function M.load_theme()
   local file = io.open(theme_file, "r")
   if file then
@@ -25,17 +63,21 @@ function M.load_theme()
 
     if colorscheme and colorscheme ~= "" then
       safe_pcall(vim.cmd.colorscheme, colorscheme)
+      -- update index to match saved scheme
+      for i, t in ipairs(themes) do
+        if t[1] == colorscheme then
+          current_theme_index = i
+          break
+        end
+      end
     end
 
-    -- if saved lualine theme is missing, fall back to colorscheme name
     if lualine_theme and lualine_theme ~= "" then
       safe_pcall(require("lualine").setup, { options = { theme = lualine_theme } })
     elseif colorscheme and colorscheme ~= "" then
       safe_pcall(require("lualine").setup, { options = { theme = colorscheme } })
     end
   else
-
-    -- fallback if no saved theme file
     local colorscheme, lualine = unpack(themes[current_theme_index])
     pcall(vim.cmd.colorscheme, colorscheme)
     pcall(require("lualine").setup, { options = { theme = lualine } })
@@ -58,6 +100,12 @@ function M.switch_theme()
   vim.notify("Switched to " .. colorscheme, vim.log.levels.INFO)
 end
 
+-- expose set_ts_highlights for manual use
+M.set_ts_highlights = set_ts_highlights
+
+-- switch theme command wrapper
+vim.api.nvim_create_user_command("SwitchColorscheme", function()
+  require("config.theme").switch_theme()
+end, { desc = "Switch colorscheme" })
+
 return M
-
-
