@@ -66,3 +66,37 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
+
+-- Auto-apply highlights so Neo-tree adopt current colorscheme
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    local links = {
+      NeoTreeNormal      = "Normal",
+      NeoTreeNormalNC    = "Normal",
+      NeoTreeEndOfBuffer = "EndOfBuffer",
+      NeoTreeCursorLine  = "CursorLine",
+      NeoTreeDirectoryName = "Directory",
+      NeoTreeDirectoryIcon = "Directory",
+      NeoTreeRootName    = "Title",
+      NeoTreeFileName    = "Normal",
+      NeoTreeFileNameOpened = "Normal",
+      NeoTreeSymbolicLinkTarget = "Comment",
+    }
+
+    for new, base in pairs(links) do
+      vim.api.nvim_set_hl(0, new, { link = base })
+    end
+  end,
+})
+
+-- Close Neovim if Neo-tree is the last window
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    if vim.bo.filetype == "neo-tree" and vim.fn.winnr("$") == 1 then
+      vim.cmd("quit")
+    end
+  end,
+})
+
+
+

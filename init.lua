@@ -1,4 +1,5 @@
 -- nvim/init.lua
+vim.opt.runtimepath:append("/home/ahmed/.config/nvim")
 require("config.options")
 require("config.lazy")
 require("config.autocmd")
