@@ -3,6 +3,7 @@ return {
   event = 'VimEnter',
   dependencies = {
     'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope-file-browser.nvim',
     { -- If encountering errors, see telescope-fzf-native README for installation instructions
       'nvim-telescope/telescope-fzf-native.nvim',
 
@@ -72,6 +73,7 @@ return {
       vim.keymap.set(m, k, v, { noremap = true, silent = true, desc = desc })
     end
 
+    telescope.load_extension("file_browser")
     ---- Files
     map('n', '<leader>ff', ':Telescope file_browser<CR>',             '[F]ile browser')
     map('n', '<leader>fw', builtin.find_files,                        '[F]iles in [W]orking directory')
