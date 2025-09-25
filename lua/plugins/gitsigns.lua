@@ -76,7 +76,7 @@ return {
       end
 
       -- Navigation
-      map("n", "<leader>hj", function()
+      map("n", "<leader>hk", function()
         if vim.wo.diff then
           vim.cmd.normal { "]c", bang = true }
         else
@@ -84,7 +84,7 @@ return {
         end
       end, "Next hunk")
 
-      map("n", "<leader>hk", function()
+      map("n", "<leader>hj", function()
         if vim.wo.diff then
           vim.cmd.normal { "[c", bang = true }
         else
@@ -103,23 +103,24 @@ return {
       -- Actions (normal)
       map("n", "<leader>hs", gs.stage_hunk,                "Stage hunk (toggles)")
       -- map("n", "<leader>hu", gs.undo_stage_hunk, "Undo stage hunk")
-      map("n", "<leader>hr", gs.reset_hunk,                "[R]eset hunk")
-      map("n", "<leader>hS", gs.stage_buffer,              "[S]tage buffer")
-      map("n", "<leader>hR", gs.reset_buffer,              "[R]eset buffer")
-      map("n", "<leader>hp", gs.preview_hunk,              "[P]review hunk")
+      map("n", "<leader>hr", gs.reset_hunk,          "[R]eset hunk")
+      map("n", "<leader>hS", gs.stage_buffer,        "[S]tage buffer")
+      map("n", "<leader>hR", gs.reset_buffer,        "[R]eset buffer")
+      map("n", "<leader>hp", gs.preview_hunk,        "[P]review hunk")
       map('n', '<leader>hi', gs.preview_hunk_inline, "[P]review hunk [I]nline")
-      map("n", "<leader>hd", gs.diffthis,                  "[D]iff against index")
-      map("n", "<leader>hb", function()                      
-        gs.blame_line({ full = true }) end,                "[B]lame line")
-      map("n", "<leader>hD", function()                      
-        gs.diffthis("@") end,                              "[D]iff against last commit")
+      map("n", "<leader>hd", gs.diffthis,            "[D]iff against index")
+      map("n", "<leader>hb", function()                
+        gs.blame_line({ full = true }) end,          "[B]lame line")
+      map("n", "<leader>hD", function()                
+        gs.diffthis("@") end,                        "[D]iff against last commit")
 
-      map('n', '<leader>hq', gs.setqflist, "[Q]uickfix unstaged hunks")
+      map('n', '<leader>hq', gs.setqflist,           "[Q]uickfix unstaged hunks")
+
       map('n', '<leader>hQ', function() gitsigns.setqflist('all') end, "[Q]uickfix all hunks")
       
       -- Toggles
       map("n", "<leader>tb", gs.toggle_current_line_blame, "Toggle blame line")
-      map("n", "<leader>hK", gs.preview_hunk_inline, "Toggle deleted preview")
+      map("n", "<leader>hJ", gs.preview_hunk_inline,       "Toggle deleted preview")
       
       -- Text object
       map({'o', 'x'}, 'ih', gs.select_hunk, "Select Git hunk (text object)")

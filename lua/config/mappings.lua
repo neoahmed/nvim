@@ -64,10 +64,10 @@ map("n", "<S-h>", ":BufferPrevious<CR>", "Prev buffer")
 map("n", "<C-S-l>", ":BufferMoveNext<CR>",     "Move buffer to right")
 map("n", "<C-S-h>", ":BufferMovePrevious<CR>", "Move buffer to left" )
 ---- Close buffers
-map("n", "<leader>q",  ":BufferClose<CR>",                 "Close buffer"           )
-map("n", "<leader>Q",  ":BufferClose!<CR>",                "Force close buffer"     )
-map("n", "<leader>Ba", ":bufdo bd<CR>",                    "Close all buffers"      )
-map("n", "<leader>Bb", ":BufferCloseAllButCurrent<CR>",    "Close all but current"  )
+map("n", "<leader>cb",  ":BufferClose<CR>",                 "[C]lose [B]uffer"           )
+map("n", "<leader>cB",  ":BufferClose!<CR>",                "[C]lose [B]uffer (Force)"     )
+map("n", "<leader>cA", ":bufdo bd<CR>",                     "[C]lose [A]ll buffers"      )
+map("n", "<leader>ca", ":BufferCloseAllButCurrent<CR>",     "[C]lose [A]ll but current"  )
 
 
 -- Buffer navigation
@@ -103,8 +103,8 @@ map('n', '<C-k>', '<C-w><C-k>', "Move focus to the upper window" )
 
 
 -- Quickfix
-map('n', '<leader>oq', '<cmd>copen<CR>',  "[O]pen quickfix list"  )
-map('n', '<leader>cq', '<cmd>cclose<CR>', "[C]lose quickfix list" )
+map('n', '<leader>qo', '<cmd>copen<CR>',  "[Q]uickfix [O]pen"  )
+map('n', '<leader>qc', '<cmd>cclose<CR>', "[Q]uickfix [C]lose" )
 -- map('n', ']q', '<cmd>cnext<CR>',     "Next quickfix item"     )
 -- map('n', '[q', '<cmd>cprev<CR>',     "Previous quickfix item" )
 -- map('n', ']Q', '<cmd>clast<CR>',     "Last quickfix item"     )
@@ -112,9 +112,14 @@ map('n', '<leader>cq', '<cmd>cclose<CR>', "[C]lose quickfix list" )
 
 
 -- Misc
-map("n", "<leader>l", ":Twilight<CR>", "Toggle Twilight")
-map("n", "<leader>z", ":ZenMode<CR>",  "Toggle Zen Mode")
+map("n", "<leader>zl", ":Twilight<CR>", "Toggle Twilight")
+map("n", "<leader>zz", ":ZenMode<CR>",  "Toggle Zen Mode")
 
+-- Delete behavior 
+---- Normal + Visual delete goes to black-hole
+map({"n", "x"}, "d", '"_d', "Delete")
+map("n", "dd", '"_dd', "Delete")
+map("n", "D", '"_D', "Delete till end of line")
 
 -- Line numbers
 map("n", "<leader>nn",
