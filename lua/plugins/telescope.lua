@@ -53,10 +53,21 @@ return {
       --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
       --   },
       -- },
-      -- pickers = {}
+      -- pickers = {
+        -- REPLACED with ivy wrapper after 23 lines 
+      --   find_files = { theme = 'ivy' }, 
+      --   live_grep  = { theme = 'ivy' },
+      --   buffers    = { theme = 'ivy' },
+      --   help_tags  = { theme = 'ivy' },
+      -- },
       extensions = {
+        fzf = {},
         ['ui-select'] = {
-          require('telescope.themes').get_dropdown(),
+          require('telescope.themes').get_ivy(),
+        },
+        file_browser = {
+          theme = "ivy",
+          hijack_netrw = true, -- optional
         },
       },
     }
@@ -67,6 +78,21 @@ return {
 
     local telescope = require("telescope")
     -- See `:help telescope.builtin`
+    -- See `:help telescope.themes`
+    local builtin   = require("telescope.builtin")
+    local themes    = require("telescope.themes")
+
+    -- ivy wrapper
+    for k, v in pairs(builtin) do
+      if type(v) == "function" then
+        builtin[k] = function(opts)
+          opts = opts or {}
+          v(themes.get_ivy(opts))
+        end
+      end
+    end
+
+
 
     -- [[ Keymaps ]]
     local function map(m, k, v, desc)
