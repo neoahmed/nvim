@@ -1,3 +1,4 @@
 lua/config/saved_theme
 *.bak
 *.bak/
+*.json
