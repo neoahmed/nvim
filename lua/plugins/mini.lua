@@ -1,6 +1,7 @@
 return { -- Collection of various small independent plugins/modules
 	"echasnovski/mini.nvim",
 	config = function()
+		require("mini.ai").setup()
 		require("mini.surround").setup({
 			mappings = {
 				add = "gsa",
@@ -43,6 +44,12 @@ return { -- Collection of various small independent plugins/modules
 			return "%2l:%-2v"
 		end
 
+		local hipatterns = require("mini.hipatterns")
+		hipatterns.setup({
+			highlighters = {
+				hex_color = hipatterns.gen_highlighter.hex_color(),
+			},
+		})
 		-- ... and there is more!
 		--  Check out: https://github.com/echasnovski/mini.nvim
 	end,
